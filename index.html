@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+	<head>
+		<title>模仿唯品会的倒计时效果</title>
+		<meta charset="utf-8" />
+	</head>
+
+	<body>
+		<div id="content">
+			<div class="centered" id="content-holder">
+				<div id="main-content">
+				<h2 class="title demo">模仿唯品会的倒计时效果</h2>
+
+				<p>倒计时：<span id="timer-code"></span></p>
+			</div>
+			<script language="javascript" type="text/javascript" src="jquery.min.js"></script>
+			<script language="javascript" type="text/javascript" src="jquery.plugin.js"></script>
+			<script language="javascript" type="text/javascript" src="jquery.timer.js"></script>
+			<script type="text/javascript">
+				$(document).ready(function() {
+
+					var endDateStr="2015-9-18 12:30:30"; //这个变量的值由后台提供
+					
+					$('#timer-code').timer({
+						delay: 1000,
+						repeat: true,
+						autostart: true,
+						callback: function() {						
+							var endDate=new Date(endDateStr);
+							var startDate=new Date();
+
+							/*计算出时间差的毫秒数*/
+							var timeDiffer=endDate.getTime()-startDate.getTime();
+
+							/*计算出相差的天数*/
+							var daysDiffer=Math.floor(timeDiffer/(24*3600*1000));
+
+							/*计算出相差的小时数*/
+							//先计算天数后剩余的毫秒数
+							var leave1=timeDiffer%(24*3600*1000);
+							var hoursDiffer=Math.floor(leave1/(3600*1000));
+
+							/*计算出相差的分钟数*/
+							//先计算小时数后剩余的毫秒数
+							var leave2=leave1%(3600*1000);        
+							var minutesDiffer=Math.floor(leave2/(60*1000));
+
+							/*计算出相差秒数*/
+							//先计算分钟数后剩余的毫秒数
+							var leave3=leave2%(60*1000);      
+							var secondsDiffer=Math.round(leave3/1000);
+
+							$(this).html("相差"+daysDiffer+"天"+hoursDiffer+"小时"+minutesDiffer+"分钟"+secondsDiffer+"秒");
+						}
+					});						
+				});				
+			</script>
+		</div>
+	</body>
+</html>
+
+
